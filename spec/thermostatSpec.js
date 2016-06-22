@@ -8,6 +8,8 @@ describe('Thermostat', function(){
     thermostat = new Thermostat();
   });
 
+  // ============== PSM SETTINGS ======================
+
   it('PSM is on by default', function(){
     expect(thermostat.isPowerSavingModeOn()).toBe(true);
   });
@@ -23,6 +25,8 @@ describe('Thermostat', function(){
     thermostat.switchPowerSavingModeOn();
     expect(thermostat.isPowerSavingModeOn()).toBe(true);
   });
+
+  // ============== CHANGES TEMPERATURE ======================
 
   it ('has a starting temperature of 20 degrees', function(){
     expect(thermostat.getCurrentTemperature()).toEqual(20);
@@ -45,6 +49,18 @@ describe('Thermostat', function(){
     expect(thermostat.getCurrentTemperature()).toEqual(10);
   });
 
+  it('reset button resets temperature to 20', function(){
+    for (var i = 0; i < 2; i++ ){
+      thermostat.decreaseTemperature();
+    }
+    expect(thermostat.getCurrentTemperature()).toEqual(18);
+    thermostat.reset();
+    expect(thermostat.getCurrentTemperature()).toEqual(20);
+  });
+
+
+  // ============== POWER SAVING MODE ON AND OFF ======================
+
   describe('Power saving mode is ON', function(){
 
     it('the maximum temperature is 25 degrees', function(){
@@ -64,6 +80,31 @@ describe('Thermostat', function(){
         thermostat.increaseTemperature();
       }
       expect(thermostat.getCurrentTemperature()).toEqual(32);
+    });
+
+  });
+
+  // ============== ENERGY USE SETTINGS ======================
+
+  describe ('Energy Settings', function(){
+
+    it ('if temperature < 18 deg equals low usage', function(){
+      for (var i = 0; i < 3; i++ ){
+        thermostat.decreaseTemperature();
+      }
+      expect(thermostat.energyUsage()).toEqual("low_usage");
+    });
+
+    it ('if temperature 18 - 25 deg equals medium usage', function(){
+      expect(thermostat.energyUsage()).toEqual("medium_usage");
+    });
+
+    it ('if temperature anything else equals high usage', function(){
+      thermostat.switchPowerSavingModeOff();
+      for (var i = 0; i < 10; i++ ){
+        thermostat.increaseTemperature();
+      }
+      expect(thermostat.energyUsage()).toEqual("high_usage");
     });
 
   });
