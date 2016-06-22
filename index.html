@@ -12,8 +12,18 @@
 
 
     <section>
-        <h1 id="temperature"></h1>
+      <h1>City temperature: <span id="current-temperature">20</span></h1>
+      <select id="current-city">
+        <option value="london">London</option>
+        <option value="newyork">New York</option>
+        <option value="paris">Paris</option>
+        <option value="tokyo">Tokyo</option>
+      </select>
+    </section>
 
+
+    <section>
+        <h1 id="temperature"></h1>
         <p>
             <button type="button" id="increaseTemperature">+</button>
             <button type="button" id="decreaseTemperature">-</button>
@@ -24,6 +34,8 @@
             <button type="button" id="powerSavingModeOff">PSM OFF</button>
         </p>
     </section>
+
+
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
